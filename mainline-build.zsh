@@ -1,5 +1,11 @@
 #!/usr/bin/zsh -xe
-echo "Building ${Platform} ${Graphics} #${BUILD_NUMBER}..."
+
+export CURRENT_BUILD_NUMBER="${UPSTREAM_BUILD_NUMBER}"
+if [[ -z "${UPSTREAM_BUILD_NUMBER}" ]]; then
+    export CURRENT_BUILD_NUMBER="${BUILD_NUMBER}"
+fi
+
+echo "Building ${Platform} ${Graphics} #${CURRENT_BUILD_NUMBER}..."
 
 BUILD_VER=$( git describe --tags --always --dirty --match "[0-9A-Z]*.[0-9A-Z]*" )
 MAJOR_VER=$( echo $BUILD_VER | cut -d '-' -f1 )
@@ -86,7 +92,7 @@ export LANGUAGES="$(echo $(for i in lang/po/*.po; do echo $(basename $i .po); do
 if [[ -z "${DEBUG}" ]]; then
     export RELEASE=1
 else
-    export BUILD_NUMBER="${BUILD_NUMBER}-debug"
+    export CURRENT_BUILD_NUMBER="${CURRENT_BUILD_NUMBER}-debug"
 fi
 
 if [[ "${Platform}" == "Android" ]]; then
@@ -117,14 +123,14 @@ fi
 
 ## Rename the package for deployment
 if [[ "${Platform}" == "OSX" ]] ; then
-    mv "Cataclysm.dmg" "Cataclysm-${MAJOR_VER}-${BUILD_NUMBER}.dmg"
+    mv "Cataclysm.dmg" "Cataclysm-${MAJOR_VER}-${CURRENT_BUILD_NUMBER}.dmg"
 elif [[ "${Platform}" == "Android" ]] ; then
-    mv "android/app/build/outputs/apk/release/"*".apk" "Cataclysm-${MAJOR_VER}-${BUILD_NUMBER}.apk"
+    mv "android/app/build/outputs/apk/release/"*".apk" "Cataclysm-${MAJOR_VER}-${CURRENT_BUILD_NUMBER}.apk"
 else
     for D in cataclysmdda-*; do
         S="$D"
-        D="${D/%.tar.gz/-${BUILD_NUMBER}.tar.gz}"
-        D="${D/%.zip/-${BUILD_NUMBER}.zip}"
+        D="${D/%.tar.gz/-${CURRENT_BUILD_NUMBER}.tar.gz}"
+        D="${D/%.zip/-${CURRENT_BUILD_NUMBER}.zip}"
         mv "$S" "$D"
     done
 fi
