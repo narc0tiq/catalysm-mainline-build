@@ -123,14 +123,14 @@ fi
 
 ## Rename the package for deployment
 if [[ "${Platform}" == "OSX" ]] ; then
-    mv "Cataclysm.dmg" "Cataclysm-${MAJOR_VER}-${CURRENT_BUILD_NUMBER}.dmg"
+    mv "Cataclysm.dmg" "Cataclysm-${MAJOR_VER}-${Platform}-${Graphics}-${CURRENT_BUILD_NUMBER}.dmg"
 elif [[ "${Platform}" == "Android" ]] ; then
     mv "android/app/build/outputs/apk/release/"*".apk" "Cataclysm-${MAJOR_VER}-${CURRENT_BUILD_NUMBER}.apk"
 else
     for D in cataclysmdda-*; do
         S="$D"
-        D="${D/%.tar.gz/-${CURRENT_BUILD_NUMBER}.tar.gz}"
-        D="${D/%.zip/-${CURRENT_BUILD_NUMBER}.zip}"
+        D="${D/%.tar.gz/-${Platform}-${Graphics}-${CURRENT_BUILD_NUMBER}.tar.gz}"
+        D="${D/%.zip/-${Platform}-${Graphics}-${CURRENT_BUILD_NUMBER}.zip}"
         mv "$S" "$D"
     done
 fi
