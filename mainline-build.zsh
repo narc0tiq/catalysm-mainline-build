@@ -46,8 +46,8 @@ case "${Platform}" in
     ;;
     "Linux_x64")
         export NATIVE="linux64"
-        export CXX="g++-4.8"
-        export LD="g++-4.8"
+        export CXX="g++-5"
+        export LD="g++-5"
     ;;
     "OSX")
         PLATFORM="x86_64-apple-darwin15"
