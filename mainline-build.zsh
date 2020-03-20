@@ -87,7 +87,7 @@ esac
 
 export CCACHE=1
 export LUA=1
-export LANGUAGES="$(echo $(for i in lang/po/*.po; do echo $(basename $i .po); done))"
+export LANGUAGES="all"
 
 if [[ -z "${DEBUG}" ]]; then
     export RELEASE=1
