@@ -14,7 +14,7 @@ echo "This build is version ${BUILD_VER}, and the time is $(date)"
 set -x
 
 if [[ -z "${COMPILE_THREAD_COUNT}" ]]; then
-    export COMPILE_THREAD_COUNT="2"
+    export COMPILE_THREAD_COUNT="1"
 fi
 
 if [[ -z "${CLANG_BINARY}" ]]; then
